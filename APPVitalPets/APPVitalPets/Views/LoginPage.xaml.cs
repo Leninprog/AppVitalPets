@@ -15,6 +15,8 @@ public partial class LoginPage : ContentPage
         var pass = PassEntry.Text;
         var api = new ApiService();
         var usuario = await api.LoginAsync(user, pass);
+        //validacion para verificar el usuario
+        // --->await DisplayAlert("DEBUG", $"ID Usuario: {usuario?.Id}", "OK");
         if (usuario != null)
             await Navigation.PushAsync(new MascotasPage(usuario));
         else

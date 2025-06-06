@@ -1,6 +1,7 @@
 ﻿using APPVitalPets.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -23,11 +24,16 @@ namespace APPVitalPets.Services
 
         public async Task<Usuario?> LoginAsync(string user, string pass)
         {
+            //Si al ejecutar este codigo se devuelve un error a este tipo de lineas verificar que se este ejecutando las APIS y que la URL sea correcta
             var response = await _client.GetAsync($"{BaseUrl}/Usuarios/login?RUsuario={user}&Contrasena={pass}");
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                var usuario = JsonSerializer.Deserialize<Usuario>(json);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                var usuario = JsonSerializer.Deserialize<Usuario>(json, options);
                 return usuario;
             }
             return null;
@@ -50,14 +56,44 @@ namespace APPVitalPets.Services
             var response = await _client.GetAsync($"{BaseUrl}/Mascotas");
             if (!response.IsSuccessStatusCode) return new();
             var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<Mascota>>(content) ?? new();
+            //Verificamos si es que si traen la informacion correcta del API, mensaje en consola
+            Debug.WriteLine($"[DEBUG] JSON recibido desde la API: {content}");
+            return JsonSerializer.Deserialize<List<Mascota>>(content, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            }) ?? new();
         }
 
-        public async Task<bool> CrearMascotaAsync(Mascota mascota)
+        /*public async Task<bool> CrearMascotaAsync(Mascota mascota)
         {
             var json = JsonSerializer.Serialize(mascota);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync($"{BaseUrl}/Mascotas", content);
+            return response.IsSuccessStatusCode;
+        }*/
+        public async Task<bool> CrearMascotaAsync(Mascota mascota)
+        {
+            var json = JsonSerializer.Serialize(mascota);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _client.PostAsync($"{BaseUrl}/Mascotas", content);
+            var cuerpo = await response.Content.ReadAsStringAsync();
+            await App.Current.MainPage.DisplayAlert($"Status {response.StatusCode}", cuerpo, "OK");
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> ActualizarMascotaAsync(Mascota mascota)
+        {
+            var json = JsonSerializer.Serialize(mascota);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _client.PutAsync($"{BaseUrl}/Mascotas/{mascota.Id}", content);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> EliminarMascotaAsync(int id)
+        {
+            var response = await _client.DeleteAsync($"{BaseUrl}/Mascotas/{id}");
             return response.IsSuccessStatusCode;
         }
     }
