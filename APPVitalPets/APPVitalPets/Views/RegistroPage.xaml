@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="APPVitalPets.Views.RegistroPage"
+             Title="RegistroPage">
+    
+    <VerticalStackLayout Padding="30">
+        <Entry x:Name="UserEntry" Placeholder="Usuario" />
+        <Entry x:Name="PassEntry" Placeholder="Contraseña" IsPassword="True" />
+        <Entry x:Name="CorreoEntry" Placeholder="Correo" />
+        <Entry x:Name="TelEntry" Placeholder="Teléfono" />
+        <Entry x:Name="DirEntry" Placeholder="Dirección" />
+        <Button Text="Registrar" Clicked="OnRegisterClicked" />
+    </VerticalStackLayout>
+</ContentPage>

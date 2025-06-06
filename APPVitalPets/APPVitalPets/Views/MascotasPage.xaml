@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="APPVitalPets.Views.MascotasPage"
+             Title="MascotasPage">
+    <VerticalStackLayout>
+        <ListView x:Name="MascotasList" ItemSelected="OnMascotaSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Nombre}" Detail="{Binding Raza}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="Agregar Mascota" Clicked="OnAgregarClicked" />
+    </VerticalStackLayout>
+</ContentPage>
