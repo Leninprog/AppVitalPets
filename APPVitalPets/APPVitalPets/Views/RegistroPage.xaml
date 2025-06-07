@@ -2,14 +2,105 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="APPVitalPets.Views.RegistroPage"
-             Title="RegistroPage">
-    
-    <VerticalStackLayout Padding="30">
-        <Entry x:Name="UserEntry" Placeholder="Usuario" />
-        <Entry x:Name="PassEntry" Placeholder="Contraseña" IsPassword="True" />
-        <Entry x:Name="CorreoEntry" Placeholder="Correo" />
-        <Entry x:Name="TelEntry" Placeholder="Teléfono" />
-        <Entry x:Name="DirEntry" Placeholder="Dirección" />
-        <Button Text="Registrar" Clicked="OnRegisterClicked" />
-    </VerticalStackLayout>
+             Title="Registro"
+             BackgroundColor="#F3F4F6">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+
+            <Label Text="Crear Cuenta"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#374151" />
+
+            <Frame BackgroundColor="White"
+                   CornerRadius="12"
+                   Padding="20"
+                   HasShadow="True"
+                   BorderColor="#E5E7EB">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <!-- Campo Usuario -->
+                    <Frame BackgroundColor="#F9FAFB"
+                           CornerRadius="10"
+                           HasShadow="False"
+                           Padding="10">
+                        <Entry x:Name="UserEntry"
+                               Placeholder="Usuario"
+                               PlaceholderColor="#9CA3AF"
+                               TextColor="#111827" />
+                    </Frame>
+
+                    <!-- Campo Contraseña -->
+                    <Frame BackgroundColor="#F9FAFB"
+                           CornerRadius="10"
+                           HasShadow="False"
+                           Padding="10">
+                        <Entry x:Name="PassEntry"
+                               Placeholder="Contraseña"
+                               IsPassword="True"
+                               PlaceholderColor="#9CA3AF"
+                               TextColor="#111827" />
+                    </Frame>
+
+                    <!-- Campo Correo -->
+                    <Frame BackgroundColor="#F9FAFB"
+                           CornerRadius="10"
+                           HasShadow="False"
+                           Padding="10">
+                        <Entry x:Name="CorreoEntry"
+                               Placeholder="Correo"
+                               Keyboard="Email"
+                               PlaceholderColor="#9CA3AF"
+                               TextColor="#111827" />
+                    </Frame>
+
+                    <!-- Campo Teléfono -->
+                    <Frame BackgroundColor="#F9FAFB"
+                           CornerRadius="10"
+                           HasShadow="False"
+                           Padding="10">
+                        <Entry x:Name="TelEntry"
+                               Placeholder="Teléfono"
+                               Keyboard="Telephone"
+                               PlaceholderColor="#9CA3AF"
+                               TextColor="#111827" />
+                    </Frame>
+
+                    <!-- Campo Dirección -->
+                    <Frame BackgroundColor="#F9FAFB"
+                           CornerRadius="10"
+                           HasShadow="False"
+                           Padding="10">
+                        <Entry x:Name="DirEntry"
+                               Placeholder="Dirección"
+                               PlaceholderColor="#9CA3AF"
+                               TextColor="#111827" />
+                    </Frame>
+
+                    <!-- Etiqueta de error -->
+                    <Label x:Name="ErrorLabel"
+                           Text="⚠️ No se pudo registrar al usuario"
+                           TextColor="#DC2626"
+                           FontAttributes="Bold"
+                           IsVisible="False"
+                           FontSize="14"
+                           HorizontalOptions="Center"
+                           Opacity="0" />
+
+                    <!-- Botón de Registrar -->
+                    <Button Text="Registrar"
+                            Clicked="OnRegisterClicked"
+                            BackgroundColor="#10B981"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            CornerRadius="10"
+                            HeightRequest="50" />
+
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

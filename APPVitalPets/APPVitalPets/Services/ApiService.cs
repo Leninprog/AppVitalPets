@@ -20,7 +20,7 @@ namespace APPVitalPets.Services
         });
 
         //private const string BaseUrl = "si se corre en emulador usar 10.0.2.2 en lugar de localhost";
-        private const string BaseUrl = "https://localhost:7287/api";
+        private const string BaseUrl = "https://localhost:7287/api"; 
 
         public async Task<Usuario?> LoginAsync(string user, string pass)
         {
