@@ -100,5 +100,70 @@ namespace APPVitalPets.Services
             var response = await _client.DeleteAsync($"{BaseUrl}/Mascotas/{id}");
             return response.IsSuccessStatusCode;
         }
+
+        // —— CITAS ——
+        public async Task<List<Cita>> ObtenerCitasAsync()
+        {
+            var resp = await _client.GetAsync($"{BaseUrl}/Citas");
+            if (!resp.IsSuccessStatusCode) return new();
+            var json = await resp.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<Cita>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new();
+        }
+
+        public async Task<bool> CrearCitaAsync(Cita cita)
+        {
+            var json = JsonSerializer.Serialize(cita);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var resp = await _client.PostAsync($"{BaseUrl}/Citas", content);
+            return resp.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> ActualizarCitaAsync(Cita cita)
+        {
+            var json = JsonSerializer.Serialize(cita);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var resp = await _client.PutAsync($"{BaseUrl}/Citas/{cita.Id}", content);
+            return resp.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> EliminarCitaAsync(int id)
+        {
+            var resp = await _client.DeleteAsync($"{BaseUrl}/Citas/{id}");
+            return resp.IsSuccessStatusCode;
+        }
+
+        // —— VETERINARIOS ——
+        public async Task<List<Veterinario>> ObtenerVeterinariosAsync()
+        {
+            var resp = await _client.GetAsync($"{BaseUrl}/Veterinarios");
+            if (!resp.IsSuccessStatusCode) return new();
+            var json = await resp.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<Veterinario>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new();
+        }
+
+        public async Task<bool> CrearVeterinarioAsync(Veterinario vet)
+        {
+            var json = JsonSerializer.Serialize(vet);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var resp = await _client.PostAsync($"{BaseUrl}/Veterinarios", content);
+            return resp.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> ActualizarVeterinarioAsync(Veterinario vet)
+        {
+            var json = JsonSerializer.Serialize(vet);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var resp = await _client.PutAsync($"{BaseUrl}/Veterinarios/{vet.Id}", content);
+            return resp.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> EliminarVeterinarioAsync(int id)
+        {
+            var resp = await _client.DeleteAsync($"{BaseUrl}/Veterinarios/{id}");
+            return resp.IsSuccessStatusCode;
+        }
+
     }
 }

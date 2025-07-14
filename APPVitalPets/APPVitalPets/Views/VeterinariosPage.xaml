@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="APPVitalPets.Views.VeterinariosPage"
+             Title="Veterinarios">
+    <VerticalStackLayout Padding="20">
+        <Button Text="Nuevo Veterinario"
+            Clicked="OnMostrarFormularioClicked" />
+
+        <CollectionView x:Name="VetsList"
+                    SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10" ColumnDefinitions="2*,2*,*">
+                        <Label Text="{Binding Nombre}" Grid.Column="0"/>
+                        <Label Text="{Binding Especialidad}" Grid.Column="1"/>
+                        <Button Text="Eliminar"
+                    Clicked="OnEliminarVet"
+                    CommandParameter="{Binding Id}"
+                    Grid.Column="2"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Formulario para agregar/editar Veterinario: Entries para Nombre, Especialidad, Teléfono, Correo -->
+    </VerticalStackLayout>
+</ContentPage>

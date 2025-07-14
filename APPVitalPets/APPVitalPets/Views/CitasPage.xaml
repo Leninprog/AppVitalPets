@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             x:Class="APPVitalPets.Views.CitasPage"
+             Title="Citas"
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Button Text="Nueva Cita"
+                    Clicked="OnMostrarFormularioClicked"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="{StaticResource White}"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="45" />
+            
+            <Frame x:Name="FormularioCita"
+                   IsVisible="False"
+                   Padding="20"
+                   CornerRadius="20"
+                   BorderColor="{StaticResource Primary}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Nombre de la mascota" />
+                    <Entry x:Name="MascotaEntry" Placeholder="Ej: Firulais" />
+
+                    <Label Text="Nombre del dueño" />
+                    <Entry x:Name="DuenoEntry" Placeholder="Ej: Juan Pérez" />
+
+                    <Label Text="Teléfono de contacto" />
+                    <Entry x:Name="TelefonoEntry" Placeholder="Ej: 0987654321" Keyboard="Telephone" />
+
+                    <Label Text="Fecha de la cita" />
+                    <DatePicker x:Name="FechaCitaPicker"
+                                MaximumDate="{x:Static sys:DateTime.Today}" />
+
+                    <Label Text="Motivo" />
+                    <Entry x:Name="MotivoEntry" Placeholder="Motivo de la cita" />
+
+                    <Label Text="Veterinario asignado" />
+                    <Entry x:Name="VetEntry" Placeholder="Ej: Dr. García" />
+
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <Button x:Name="RegistrarCitaBtn"
+                                Text="Registrar"
+                                Clicked="OnRegistrarCitaClicked"
+                                BackgroundColor="{StaticResource Secondary}"
+                                TextColor="{StaticResource Black}"
+                                CornerRadius="8"
+                                WidthRequest="120" />
+                        <Button x:Name="ActualizarCitaBtn"
+                                Text="Actualizar"
+                                Clicked="OnActualizarCitaClicked"
+                                IsVisible="False"
+                                BackgroundColor="{StaticResource Warning}"
+                                TextColor="{StaticResource Black}"
+                                CornerRadius="8"
+                                WidthRequest="120" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame CornerRadius="20"
+                   BorderColor="{AppThemeBinding Light={StaticResource Gray400}}"
+                   Padding="10"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource White}}"
+                   HasShadow="True">
+                <CollectionView x:Name="CitasList"
+                                SelectionMode="None"
+                                Margin="0">
+                    <CollectionView.Header>
+                        <Grid Padding="10" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Mascota" FontAttributes="Bold" Grid.Column="0" />
+                            <Label Text="Dueño" FontAttributes="Bold" Grid.Column="1" />
+                            <Label Text="Fecha"  FontAttributes="Bold" Grid.Column="2" />
+                            <Label Text="Motivo" FontAttributes="Bold" Grid.Column="3" />
+                            <Label Text="Acción" FontAttributes="Bold" Grid.Column="4" />
+                        </Grid>
+                    </CollectionView.Header>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="10" ColumnSpacing="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding NombreMascota}" Grid.Column="0" />
+                                    <Label Text="{Binding NombreDueño}" Grid.Column="1" />
+                                    <Label Text="{Binding Fecha, StringFormat='dd/MM/yyyy'}" Grid.Column="2" />
+                                    <Label Text="{Binding Motivo}" Grid.Column="3" />
+                                    <HorizontalStackLayout Grid.Column="4" Spacing="5" HorizontalOptions="Center">
+                                        <Button Text="Editar"
+                                                Clicked="OnEditarCitaClicked"
+                                                CommandParameter="{Binding .}"
+                                                BackgroundColor="{StaticResource Warning}"
+                                                TextColor="{StaticResource Black}"
+                                                CornerRadius="6"
+                                                WidthRequest="60" />
+                                        <Button Text="Eliminar"
+                                                Clicked="OnEliminarCitaClicked"
+                                                CommandParameter="{Binding Id}"
+                                                BackgroundColor="#F44336"
+                                                TextColor="{StaticResource White}"
+                                                CornerRadius="6"
+                                                WidthRequest="60" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

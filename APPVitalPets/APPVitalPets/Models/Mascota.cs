@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace APPVitalPets.Models
@@ -12,7 +13,10 @@ namespace APPVitalPets.Models
         public string Nombre { get; set; }
         public string Especie { get; set; }
         public string Raza { get; set; }
+        public DateTime FechaNacimiento { get; set; }
         public int Edad { get; set; }
+
+        [JsonIgnore]
         public int UsuarioId { get; set; }
     }
 }
