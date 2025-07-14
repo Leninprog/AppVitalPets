@@ -15,7 +15,6 @@
                 <Button
                     Grid.Column="0"
                     Text="← Mascotas"
-                    HorizontalOptions="Start"
                     Clicked="OnVolverMascotasClicked"
                     BackgroundColor="{StaticResource Primary}"
                     TextColor="{StaticResource White}"
@@ -43,6 +42,7 @@
                 FontAttributes="Bold"
                 FontSize="16"
                 HeightRequest="50"
+                CornerRadius="15"
                 Margin="0,5,0,0" />
 
             <!-- Formulario de cita mejorado -->
@@ -50,111 +50,159 @@
                 x:Name="FormularioCita"
                 IsVisible="False"
                 Padding="25"
+                CornerRadius="20"
                 BorderColor="{StaticResource Primary}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}">
 
                 <VerticalStackLayout Spacing="18">
-                    <Label Text="📋 Nueva Cita Veterinaria" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalOptions="Center" Margin="0,0,0,10" />
+                    <Label
+                        Text="📋 Nueva Cita Veterinaria"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Primary}"
+                        HorizontalOptions="Center"
+                        Margin="0,0,0,10" />
 
-                    <VerticalStackLayout Spacing="5">
-                        <Label Text="🐕 Nombre de la mascota" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}" />
-                        <Frame Padding="0" HasShadow="False" BorderColor="{StaticResource Primary}">
-                            <Entry x:Name="MascotaEntry" Placeholder="Ej: Firulais" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" PlaceholderColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" HeightRequest="45" FontSize="15" />
-                        </Frame>
+                    <!-- Campos del formulario con Frame envolvente -->
+                    <VerticalStackLayout Spacing="12">
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="🐕 Nombre de la mascota" FontAttributes="Bold" />
+                            <Frame CornerRadius="10" Padding="0" BorderColor="{StaticResource Primary}">
+                                <Entry x:Name="MascotaEntry"
+                                       Placeholder="Ej: Firulais"
+                                       BackgroundColor="Transparent"
+                                       HeightRequest="45" />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="👤 Nombre del dueño" FontAttributes="Bold" />
+                            <Frame CornerRadius="10" Padding="0" BorderColor="{StaticResource Primary}">
+                                <Entry x:Name="DuenoEntry"
+                                       Placeholder="Ej: Juan Pérez"
+                                       BackgroundColor="Transparent"
+                                       HeightRequest="45" />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="📞 Teléfono" FontAttributes="Bold" />
+                            <Frame CornerRadius="10" Padding="0" BorderColor="{StaticResource Primary}">
+                                <Entry x:Name="TelefonoEntry"
+                                       Keyboard="Telephone"
+                                       Placeholder="0987654321"
+                                       BackgroundColor="Transparent"
+                                       HeightRequest="45" />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="📅 Fecha de la cita" FontAttributes="Bold" />
+                            <Frame CornerRadius="10" Padding="0" BorderColor="{StaticResource Primary}">
+                                <DatePicker x:Name="FechaCitaPicker"
+                                            MaximumDate="{x:Static sys:DateTime.Today}"
+                                            HeightRequest="45" />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="🏥 Motivo" FontAttributes="Bold" />
+                            <Frame CornerRadius="10" Padding="0" BorderColor="{StaticResource Primary}">
+                                <Entry x:Name="MotivoEntry"
+                                       Placeholder="Describe el motivo de la cita"
+                                       BackgroundColor="Transparent"
+                                       HeightRequest="45" />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="👨‍⚕ Veterinario asignado" FontAttributes="Bold" />
+                            <Frame CornerRadius="10" Padding="0" BorderColor="{StaticResource Primary}">
+                                <Entry x:Name="VetEntry"
+                                       Placeholder="Ej: Dr. García"
+                                       BackgroundColor="Transparent"
+                                       HeightRequest="45" />
+                            </Frame>
+                        </VerticalStackLayout>
+
                     </VerticalStackLayout>
 
-                    <VerticalStackLayout Spacing="5">
-                        <Label Text="👤 Nombre del dueño" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}" />
-                        <Frame Padding="0" HasShadow="False" BorderColor="{StaticResource Primary}">
-                            <Entry x:Name="DuenoEntry" Placeholder="Ej: Juan Pérez" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" PlaceholderColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" HeightRequest="45" FontSize="15" />
-                        </Frame>
-                    </VerticalStackLayout>
-
-                    <VerticalStackLayout Spacing="5">
-                        <Label Text="📞 Teléfono de contacto" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}" />
-                        <Frame Padding="0" HasShadow="False" BorderColor="{StaticResource Primary}">
-                            <Entry x:Name="TelefonoEntry" Placeholder="Ej: 0987654321" Keyboard="Telephone" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" PlaceholderColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" HeightRequest="45" FontSize="15" />
-                        </Frame>
-                    </VerticalStackLayout>
-
-                    <VerticalStackLayout Spacing="5">
-                        <Label Text="🗕 Fecha de la cita" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}" />
-                        <DatePicker x:Name="FechaCitaPicker" MaximumDate="{x:Static sys:DateTime.Today}" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray800}}" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" HeightRequest="45" FontSize="15" />
-                    </VerticalStackLayout>
-
-                    <VerticalStackLayout Spacing="5">
-                        <Label Text="🏥 Motivo de la consulta" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}" />
-                        <Frame Padding="0" HasShadow="False" BorderColor="{StaticResource Primary}">
-                            <Entry x:Name="MotivoEntry" Placeholder="Describe el motivo de la cita" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" PlaceholderColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" HeightRequest="45" FontSize="15" />
-                        </Frame>
-                    </VerticalStackLayout>
-
-                    <VerticalStackLayout Spacing="5">
-                        <Label Text="👨‍⚕ Veterinario asignado" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}" />
-                        <Frame Padding="0" HasShadow="False" BorderColor="{StaticResource Primary}">
-                            <Entry x:Name="VetEntry" Placeholder="Ej: Dr. García" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" PlaceholderColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" HeightRequest="45" FontSize="15" />
-                        </Frame>
-                    </VerticalStackLayout>
-
+                    <!-- Botones de acción -->
                     <HorizontalStackLayout Spacing="15" HorizontalOptions="Center" Margin="0,15,0,0">
-                        <Button x:Name="RegistrarCitaBtn" Text="✅ Registrar" Clicked="OnRegistrarCitaClicked" BackgroundColor="{StaticResource Secondary}" TextColor="{StaticResource Black}" WidthRequest="130" HeightRequest="45" FontSize="15" FontAttributes="Bold" />
-                        <Button x:Name="ActualizarCitaBtn" Text="🔄 Actualizar" Clicked="OnActualizarCitaClicked" IsVisible="False" BackgroundColor="{StaticResource Warning}" TextColor="{StaticResource Black}" WidthRequest="130" HeightRequest="45" FontSize="15" FontAttributes="Bold" />
+                        <Button x:Name="RegistrarCitaBtn"
+                                Text="✅ Registrar"
+                                Clicked="OnRegistrarCitaClicked"
+                                BackgroundColor="{StaticResource Secondary}"
+                                TextColor="{StaticResource Black}"
+                                CornerRadius="12"
+                                WidthRequest="130"
+                                HeightRequest="45"
+                                FontAttributes="Bold" />
+                        <Button x:Name="ActualizarCitaBtn"
+                                Text="🔄 Actualizar"
+                                Clicked="OnActualizarCitaClicked"
+                                IsVisible="False"
+                                BackgroundColor="{StaticResource Warning}"
+                                TextColor="{StaticResource Black}"
+                                CornerRadius="12"
+                                WidthRequest="130"
+                                HeightRequest="45"
+                                FontAttributes="Bold" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Lista de citas completamente rediseñada -->
-            <Frame BorderColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
-                <VerticalStackLayout>
-                    <Frame BackgroundColor="{StaticResource Primary}" Padding="20,15" HasShadow="False">
-                        <Label Text="📋 Citas Programadas" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource White}" HorizontalOptions="Center" />
-                    </Frame>
+            <!-- Lista de citas estilizada -->
+            <Frame
+                CornerRadius="20"
+                BorderColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
 
-                    <CollectionView x:Name="CitasList" SelectionMode="None" Margin="10" BackgroundColor="Transparent">
-                        <CollectionView.Header>
-                            <Grid Padding="15,12" ColumnSpacing="10" BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray800}}" HeightRequest="50">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="1.5*" />
-                                </Grid.ColumnDefinitions>
-                                <Label Text="🐾 Mascota" FontAttributes="Bold" Grid.Column="0" TextColor="{StaticResource Primary}" FontSize="14" VerticalOptions="Center" />
-                                <Label Text="👤 Dueño" FontAttributes="Bold" Grid.Column="1" TextColor="{StaticResource Primary}" FontSize="14" VerticalOptions="Center" />
-                                <Label Text="📅 Fecha" FontAttributes="Bold" Grid.Column="2" TextColor="{StaticResource Primary}" FontSize="14" VerticalOptions="Center" />
-                                <Label Text="🏥 Motivo" FontAttributes="Bold" Grid.Column="3" TextColor="{StaticResource Primary}" FontSize="14" VerticalOptions="Center" />
-                                <Label Text="⚙ Acciones" FontAttributes="Bold" Grid.Column="4" TextColor="{StaticResource Primary}" FontSize="14" VerticalOptions="Center" />
-                            </Grid>
-                        </CollectionView.Header>
+                <CollectionView x:Name="CitasList" SelectionMode="None" Margin="10">
+                    <CollectionView.Header>
+                        <Grid Padding="10" ColumnSpacing="10" HeightRequest="40">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Mascota" Grid.Column="0" FontAttributes="Bold" />
+                            <Label Text="Dueño"  Grid.Column="1" FontAttributes="Bold" />
+                            <Label Text="Fecha"  Grid.Column="2" FontAttributes="Bold" />
+                            <Label Text="Motivo" Grid.Column="3" FontAttributes="Bold" />
+                            <Label Text="Acción" Grid.Column="4" FontAttributes="Bold" />
+                        </Grid>
+                    </CollectionView.Header>
 
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Frame BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray800}}" Padding="0" Margin="0,5" BorderColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}">
-                                    <Grid Padding="15" ColumnSpacing="10" HeightRequest="65">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="1.5*" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Label Text="{Binding NombreMascota}" Grid.Column="0" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource Gray800}, Dark={StaticResource White}}" VerticalOptions="Center" />
-                                        <Label Text="{Binding NombreDueño}" Grid.Column="1" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}" VerticalOptions="Center" />
-                                        <Label Text="{Binding Fecha, StringFormat='{0:dd/MM/yyyy}'}" Grid.Column="2" FontSize="14" TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}" VerticalOptions="Center" />
-                                        <Label Text="{Binding Motivo}" Grid.Column="3" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="2" />
-
-                                        <HorizontalStackLayout Grid.Column="4" Spacing="8" HorizontalOptions="Center" VerticalOptions="Center">
-                                            <Button Text="✏" Clicked="OnEditarCitaClicked" CommandParameter="{Binding .}" BackgroundColor="{StaticResource Warning}" TextColor="White" WidthRequest="38" HeightRequest="38" FontSize="14" Padding="0" />
-                                            <Button Text="🗑" Clicked="OnEliminarCitaClicked" CommandParameter="{Binding Id}" BackgroundColor="#F44336" TextColor="White" WidthRequest="38" HeightRequest="38" FontSize="14" Padding="0" />
-                                        </HorizontalStackLayout>
-                                    </Grid>
-                                </Frame>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </VerticalStackLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="12" Padding="10" Margin="0,5"
+                                   BorderColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray800}}">
+                                <Grid ColumnSpacing="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding NombreMascota}" Grid.Column="0" />
+                                    <Label Text="{Binding NombreDueño}" Grid.Column="1" />
+                                    <Label Text="{Binding Fecha, StringFormat='dd/MM/yyyy'}" Grid.Column="2" />
+                                    <Label Text="{Binding Motivo}" Grid.Column="3" LineBreakMode="TailTruncation" MaxLines="2" />
+                                    <HorizontalStackLayout Grid.Column="4" Spacing="8">
+                                        <Button Text="✏" Clicked="OnEditarCitaClicked" CommandParameter="{Binding .}" WidthRequest="36" HeightRequest="36" />
+                                        <Button Text="🗑" Clicked="OnEliminarCitaClicked" CommandParameter="{Binding Id}" WidthRequest="36" HeightRequest="36" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </Frame>
 
         </VerticalStackLayout>
