@@ -1,21 +1,36 @@
- xmlns:views="clr-namespace:APPVitalPets.Views"
-    <?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="APPVitalPets.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:APPVitalPets"
     xmlns:views="clr-namespace:APPVitalPets.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="APPVitalPets">
 
+    <!-- P�gina de login -->
     <ShellContent 
-        Title="Inicio" 
-        ContentTemplate="{DataTemplate views:LoginPage}" 
-        Route="LoginPage" />
+      Title="Inicio"
+      Route="Login"
+      ContentTemplate="{DataTemplate views:LoginPage}" />
+
     <TabBar>
-        <ShellContent Title="Mascotas"      ContentTemplate="{DataTemplate views:MascotasPage}" />
-        <ShellContent Title="Citas"         ContentTemplate="{DataTemplate views:CitasPage}" />
-        <ShellContent Title="Veterinarios"  ContentTemplate="{DataTemplate views:VeterinariosPage}" />
+        <!-- Mascotas -->
+        <ShellContent 
+        Title="Mascotas"
+        Route="MascotasPage"   
+            ContentTemplate="{DataTemplate views:MascotasPage}" />
+
+            <!-- Citas -->
+            <ShellContent 
+        Title="Citas"
+        Route="CitasPage"     
+                ContentTemplate="{DataTemplate views:CitasPage}" />
+
+                <!-- Veterinarios -->
+                <ShellContent 
+        Title="Veterinarios"
+        Route="VeterinariosPage"  
+                    ContentTemplate="{DataTemplate views:VeterinariosPage}" />
     </TabBar>
+
 </Shell>

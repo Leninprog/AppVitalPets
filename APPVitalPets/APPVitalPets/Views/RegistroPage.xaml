@@ -7,7 +7,6 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
-
             <Label Text="Crear Cuenta"
                    FontSize="28"
                    FontAttributes="Bold"
@@ -22,7 +21,6 @@
 
                 <VerticalStackLayout Spacing="15">
 
-                    <!-- Campo Usuario -->
                     <Frame BackgroundColor="#F9FAFB"
                            CornerRadius="10"
                            HasShadow="False"
@@ -33,7 +31,6 @@
                                TextColor="#111827" />
                     </Frame>
 
-                    <!-- Campo Contraseña -->
                     <Frame BackgroundColor="#F9FAFB"
                            CornerRadius="10"
                            HasShadow="False"
@@ -45,7 +42,6 @@
                                TextColor="#111827" />
                     </Frame>
 
-                    <!-- Campo Correo -->
                     <Frame BackgroundColor="#F9FAFB"
                            CornerRadius="10"
                            HasShadow="False"
@@ -57,7 +53,6 @@
                                TextColor="#111827" />
                     </Frame>
 
-                    <!-- Campo Teléfono -->
                     <Frame BackgroundColor="#F9FAFB"
                            CornerRadius="10"
                            HasShadow="False"
@@ -69,7 +64,6 @@
                                TextColor="#111827" />
                     </Frame>
 
-                    <!-- Campo Dirección -->
                     <Frame BackgroundColor="#F9FAFB"
                            CornerRadius="10"
                            HasShadow="False"
@@ -80,7 +74,6 @@
                                TextColor="#111827" />
                     </Frame>
 
-                    <!-- Etiqueta de error -->
                     <Label x:Name="ErrorLabel"
                            Text="⚠️ No se pudo registrar al usuario"
                            TextColor="#DC2626"
@@ -90,7 +83,6 @@
                            HorizontalOptions="Center"
                            Opacity="0" />
 
-                    <!-- Botón de Registrar -->
                     <Button Text="Registrar"
                             Clicked="OnRegisterClicked"
                             BackgroundColor="#10B981"

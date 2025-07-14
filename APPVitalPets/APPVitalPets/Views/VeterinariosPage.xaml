@@ -7,7 +7,6 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
-
             <Button Text="Nuevo Veterinario"
               Clicked="OnMostrarFormularioClicked"
               BackgroundColor="{StaticResource Primary}"
@@ -137,7 +136,6 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </Frame>
-
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

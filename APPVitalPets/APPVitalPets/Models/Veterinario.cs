@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace APPVitalPets.Models
 {
-    internal class Veterinario
+    public class Veterinario
     {
         public int Id { get; set; }
         public string Nombre { get; set; }

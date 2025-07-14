@@ -11,6 +11,17 @@ namespace APPVitalPets.Views
         private Usuario usuarioActual;
         private Mascota mascotaEnEdicion = null;
 
+        private async void OnIrCitasClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//CitasPage");
+        }
+
+        private async void OnIrVeterinariosClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//VeterinariosPage");
+        }
+
+
         public MascotasPage(Usuario user)
         {
             InitializeComponent();

@@ -15,8 +15,6 @@ namespace APPVitalPets.Models
         public string Raza { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public int Edad { get; set; }
-
-        [JsonIgnore]
         public int UsuarioId { get; set; }
     }
 }

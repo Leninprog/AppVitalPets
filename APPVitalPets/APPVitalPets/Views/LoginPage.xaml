@@ -7,7 +7,6 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
-
             <Label x:Name="TitleLabel"
                    Text="¡Bienvenido a Vital Pets!"
                    FontSize="28"
