@@ -1,28 +1,143 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="APPVitalPets.Views.VeterinariosPage"
-             Title="Veterinarios">
-    <VerticalStackLayout Padding="20">
-        <Button Text="Nuevo Veterinario"
-            Clicked="OnMostrarFormularioClicked" />
+             Title="Veterinarios"
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
 
-        <CollectionView x:Name="VetsList"
-                    SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="10" ColumnDefinitions="2*,2*,*">
-                        <Label Text="{Binding Nombre}" Grid.Column="0"/>
-                        <Label Text="{Binding Especialidad}" Grid.Column="1"/>
-                        <Button Text="Eliminar"
-                    Clicked="OnEliminarVet"
-                    CommandParameter="{Binding Id}"
-                    Grid.Column="2"/>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
 
-        <!-- Formulario para agregar/editar Veterinario: Entries para Nombre, Especialidad, Teléfono, Correo -->
-    </VerticalStackLayout>
+            <Button Text="Nuevo Veterinario"
+              Clicked="OnMostrarFormularioClicked"
+              BackgroundColor="{StaticResource Primary}"
+              TextColor="{StaticResource White}"
+              FontAttributes="Bold"
+              CornerRadius="10"
+              HeightRequest="45" />
+
+            <Frame x:Name="FormularioVet"
+             IsVisible="False"
+             Padding="20"
+             CornerRadius="20"
+             BorderColor="{StaticResource Primary}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
+             HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+
+                    <Label Text="Nombre" />
+                    <Entry x:Name="NombreVetEntry"
+                 Placeholder="Ej: Dra. Gómez"
+                 FontFamily="OpenSansRegular"
+                 FontSize="14" />
+
+                    <Label Text="Especialidad" />
+                    <Entry x:Name="EspecialidadEntry"
+                 Placeholder="Ej: Cardiología"
+                 FontFamily="OpenSansRegular"
+                 FontSize="14" />
+
+                    <Label Text="Teléfono" />
+                    <Entry x:Name="TelefonoVetEntry"
+                 Placeholder="Ej: 0987654321"
+                 Keyboard="Telephone"
+                 FontFamily="OpenSansRegular"
+                 FontSize="14" />
+
+                    <Label Text="Correo" />
+                    <Entry x:Name="CorreoVetEntry"
+                 Placeholder="ejemplo@correo.com"
+                 Keyboard="Email"
+                 FontFamily="OpenSansRegular"
+                 FontSize="14" />
+
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                        <Button x:Name="RegistrarVetBtn"
+                    Text="Registrar"
+                    Clicked="OnRegistrarVetClicked"
+                    BackgroundColor="{StaticResource Secondary}"
+                    TextColor="{StaticResource Black}"
+                    CornerRadius="8"
+                    WidthRequest="120" />
+                        <Button x:Name="ActualizarVetBtn"
+                    Text="Actualizar"
+                    Clicked="OnActualizarVetClicked"
+                    IsVisible="False"
+                    BackgroundColor="{StaticResource Warning}"
+                    TextColor="{StaticResource Black}"
+                    CornerRadius="8"
+                    WidthRequest="120" />
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Lista de veterinarios -->
+            <Frame CornerRadius="20"
+             BorderColor="{AppThemeBinding Light={StaticResource Gray400}}"
+             Padding="10"
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}}"
+             HasShadow="True">
+                <CollectionView x:Name="VetsList"
+                        SelectionMode="None">
+                    <CollectionView.Header>
+                        <Grid Padding="10" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Nombre"        FontAttributes="Bold" Grid.Column="0" />
+                            <Label Text="Especialidad"  FontAttributes="Bold" Grid.Column="1" />
+                            <Label Text="Teléfono"      FontAttributes="Bold" Grid.Column="2" />
+                            <Label Text="Correo"        FontAttributes="Bold" Grid.Column="3" />
+                            <Label Text="Acción"        FontAttributes="Bold" Grid.Column="4" />
+                        </Grid>
+                    </CollectionView.Header>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="10" ColumnSpacing="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Text="{Binding Nombre}"         Grid.Column="0" />
+                                    <Label Text="{Binding Especialidad}"   Grid.Column="1" />
+                                    <Label Text="{Binding Telefono}"       Grid.Column="2" />
+                                    <Label Text="{Binding Correo}"         Grid.Column="3" />
+
+                                    <HorizontalStackLayout Grid.Column="4"
+                                         Spacing="5"
+                                         HorizontalOptions="Center">
+                                        <Button Text="Editar"
+                            Clicked="OnEditarVetClicked"
+                            CommandParameter="{Binding .}"
+                            BackgroundColor="{StaticResource Warning}"
+                            TextColor="{StaticResource Black}"
+                            CornerRadius="6"
+                            WidthRequest="60" />
+                                        <Button Text="Eliminar"
+                            Clicked="OnEliminarVetClicked"
+                            CommandParameter="{Binding Id}"
+                            BackgroundColor="#F44336"
+                            TextColor="{StaticResource White}"
+                            CornerRadius="6"
+                            WidthRequest="60" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
