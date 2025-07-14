@@ -14,7 +14,10 @@ namespace APPVitalPets.Views
         {
             InitializeComponent();
         }
-
+        private async void OnVolverMascotasClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//MascotasPage");
+        }
         protected override void OnAppearing()
         {
             base.OnAppearing();

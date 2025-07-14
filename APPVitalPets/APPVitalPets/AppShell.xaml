@@ -14,19 +14,17 @@
       ContentTemplate="{DataTemplate views:LoginPage}" />
 
     <TabBar>
-        <!-- Mascotas -->
-        <ShellContent 
-        Title="Mascotas"
-        Route="MascotasPage"   
-            ContentTemplate="{DataTemplate views:MascotasPage}" />
 
-            <!-- Citas -->
+        <ShellContent 
+        Title="Mascotas" 
+        Route="MascotasPage" 
+        ContentTemplate="{DataTemplate views:MascotasPage}" />
+        
             <ShellContent 
         Title="Citas"
         Route="CitasPage"     
                 ContentTemplate="{DataTemplate views:CitasPage}" />
 
-                <!-- Veterinarios -->
                 <ShellContent 
         Title="Veterinarios"
         Route="VeterinariosPage"  

@@ -7,6 +7,13 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+            <Button Text="← Mascotas"
+                   HorizontalOptions="Start"
+                   Clicked="OnVolverMascotasClicked"
+                   BackgroundColor="{StaticResource Primary}"
+                   TextColor="{StaticResource White}"
+                   CornerRadius="8"
+                   HeightRequest="40"/>
             <Label Text="Crear Cuenta"
                    FontSize="28"
                    FontAttributes="Bold"

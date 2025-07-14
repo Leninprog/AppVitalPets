@@ -10,6 +10,10 @@ namespace APPVitalPets.Views
     {
         private Cita citaEnEdicion;
 
+        private async void OnVolverMascotasClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//MascotasPage");
+        }
         public CitasPage()
         {
             InitializeComponent();

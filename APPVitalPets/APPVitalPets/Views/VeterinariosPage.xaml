@@ -7,13 +7,21 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
-            <Button Text="Nuevo Veterinario"
-              Clicked="OnMostrarFormularioClicked"
-              BackgroundColor="{StaticResource Primary}"
-              TextColor="{StaticResource White}"
-              FontAttributes="Bold"
-              CornerRadius="10"
-              HeightRequest="45" />
+            <Button Text="← Mascotas"
+                    HorizontalOptions="Start"
+                    Clicked="OnVolverMascotasClicked"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="{StaticResource White}"
+                    CornerRadius="8"
+                    HeightRequest="40"/>
+            <Button 
+                      Text="Nuevo Veterinario"
+                      Clicked="OnMostrarFormularioClicked"
+                      BackgroundColor="{StaticResource Primary}"
+                      TextColor="{StaticResource White}"
+                      FontAttributes="Bold"
+                      CornerRadius="10"
+                      HeightRequest="45" />
 
             <Frame x:Name="FormularioVet"
              IsVisible="False"
@@ -119,7 +127,7 @@
                             Clicked="OnEditarVetClicked"
                             CommandParameter="{Binding .}"
                             BackgroundColor="{StaticResource Warning}"
-                            TextColor="{StaticResource Black}"
+                            TextColor="{StaticResource White}"
                             CornerRadius="6"
                             WidthRequest="60" />
                                         <Button Text="Eliminar"

@@ -11,6 +11,7 @@ public partial class LoginPage : ContentPage
         InitializeComponent();
     }
 
+
     // Animación cuando aparece la página
     private async void OnPageAppearing(object sender, EventArgs e)
     {
@@ -53,10 +54,12 @@ public partial class LoginPage : ContentPage
             ErrorLabel.IsVisible = true;
             await ErrorLabel.FadeTo(1, 250);
         }
+
     }
 
     private async void OnRegisterClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new RegistroPage());
     }
+
 }

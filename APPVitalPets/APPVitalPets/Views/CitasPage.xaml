@@ -8,6 +8,13 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
+            <Button Text="← Mascotas"
+                    HorizontalOptions="Start"
+                    Clicked="OnVolverMascotasClicked"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="{StaticResource White}"
+                    CornerRadius="8"
+                    HeightRequest="40"/>    
             <Button Text="Nueva Cita"
                     Clicked="OnMostrarFormularioClicked"
                     BackgroundColor="{StaticResource Primary}"
