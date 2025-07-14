@@ -1,20 +1,34 @@
 using System;
 using System.Linq;
+using System.Text.Json;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using APPVitalPets.Models;
 using APPVitalPets.Services;
-using Microsoft.Maui.Controls;
 
 namespace APPVitalPets.Views
 {
     public partial class MascotasPage : ContentPage
     {
         private Usuario usuarioActual;
-        private Mascota mascotaEnEdicion = null;
+        private Mascota mascotaEnEdicion;
 
         public MascotasPage()
         {
             InitializeComponent();
 
+            // 1) Recuperar el usuario guardado en Preferences
+            var js = Preferences.Get("usuarioJson", string.Empty);
+            if (string.IsNullOrEmpty(js))
+            {
+                // Si no hay usuario, volver al login
+                _ = Shell.Current.GoToAsync("//Login");
+                return;
+            }
+
+            // 2) Deserializar y cargar mascotas
+            usuarioActual = JsonSerializer.Deserialize<Usuario>(js);
+            CargarMascotas();
         }
 
         private async void OnIrCitasClicked(object sender, EventArgs e)
@@ -27,30 +41,25 @@ namespace APPVitalPets.Views
             await Shell.Current.GoToAsync("//VeterinariosPage");
         }
 
-       public MascotasPage(Usuario user)
-        {
-            InitializeComponent();
-            usuarioActual = user;
-        }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
             CargarMascotas();
         }
 
-        //Filtramos las mascotas por el ID del usuario, para que se visualice solo las asociadas con el dueño.
         private async void CargarMascotas()
         {
+            if (usuarioActual == null)
+                return;
+
             var api = new ApiService();
             var todas = await api.ObtenerMascotasAsync();
-            var mias = todas.Where(m => m.UsuarioId == usuarioActual.Id).ToList(); // Encargada de filtrar
+            var mias = todas.Where(m => m.UsuarioId == usuarioActual.Id).ToList();
             MascotasList.ItemsSource = mias;
         }
 
         private async void OnAgregarClicked(object sender, EventArgs e)
         {
-            // Validar campos
             if (string.IsNullOrWhiteSpace(NombreEntry.Text) ||
                 string.IsNullOrWhiteSpace(RazaEntry.Text) ||
                 string.IsNullOrWhiteSpace(EspecieEntry.Text))
@@ -59,19 +68,18 @@ namespace APPVitalPets.Views
                 return;
             }
 
-            // Calcular edad a partir de la fecha de nacimiento
             DateTime fecha = FechaNacimientoPicker.Date;
             int edad = DateTime.Today.Year - fecha.Year
                 - (fecha > DateTime.Today.AddYears(-(DateTime.Today.Year - fecha.Year)) ? 1 : 0);
 
             var nueva = new Mascota
             {
-                Nombre = NombreEntry.Text,
-                Raza = RazaEntry.Text,
-                Especie = EspecieEntry.Text,
+                Nombre          = NombreEntry.Text,
+                Raza            = RazaEntry.Text,
+                Especie         = EspecieEntry.Text,
                 FechaNacimiento = fecha,
-                Edad = edad,
-                UsuarioId = usuarioActual.Id
+                Edad            = edad,
+                UsuarioId       = usuarioActual.Id
             };
 
             var api = new ApiService();
@@ -80,15 +88,13 @@ namespace APPVitalPets.Views
                 await DisplayAlert("Éxito", "Mascota creada correctamente", "OK");
                 CargarMascotas();
 
-                // Limpiar formulario
-                NombreEntry.Text = string.Empty;
-                RazaEntry.Text = string.Empty;
-                EspecieEntry.Text = string.Empty;
+                NombreEntry.Text           = string.Empty;
+                RazaEntry.Text             = string.Empty;
+                EspecieEntry.Text          = string.Empty;
                 FechaNacimientoPicker.Date = DateTime.Today;
-
                 FormularioMascota.IsVisible = false;
-                RegistrarBtn.IsVisible = true;
-                ActualizarBtn.IsVisible = false;
+                RegistrarBtn.IsVisible      = true;
+                ActualizarBtn.IsVisible     = false;
             }
             else
             {
@@ -98,27 +104,25 @@ namespace APPVitalPets.Views
 
         private void OnMostrarFormularioClicked(object sender, EventArgs e)
         {
-            // Mostrar formulario en modo “Agregar”
             FormularioMascota.IsVisible = true;
-            RegistrarBtn.IsVisible = true;
-            ActualizarBtn.IsVisible = false;
+            RegistrarBtn.IsVisible      = true;
+            ActualizarBtn.IsVisible     = false;
         }
 
         private void OnEditarMascota(object sender, EventArgs e)
         {
-            var boton = sender as Button;
-            var mascota = boton?.CommandParameter as Mascota;
+            var btn = sender as Button;
+            var mascota = btn?.CommandParameter as Mascota;
             if (mascota == null) return;
 
             mascotaEnEdicion = mascota;
-            NombreEntry.Text = mascota.Nombre;
-            RazaEntry.Text = mascota.Raza;
-            EspecieEntry.Text = mascota.Especie;
+            NombreEntry.Text           = mascota.Nombre;
+            RazaEntry.Text             = mascota.Raza;
+            EspecieEntry.Text          = mascota.Especie;
             FechaNacimientoPicker.Date = mascota.FechaNacimiento;
-
             FormularioMascota.IsVisible = true;
-            RegistrarBtn.IsVisible = false;
-            ActualizarBtn.IsVisible = true;
+            RegistrarBtn.IsVisible      = false;
+            ActualizarBtn.IsVisible     = true;
         }
 
         private async void OnActualizarClicked(object sender, EventArgs e)
@@ -148,17 +152,13 @@ namespace APPVitalPets.Views
             {
                 await DisplayAlert("Actualizado", "Mascota actualizada correctamente", "OK");
                 mascotaEnEdicion = null;
-
-                // Limpiar formulario
-                NombreEntry.Text = string.Empty;
-                RazaEntry.Text = string.Empty;
-                EspecieEntry.Text = string.Empty;
+                NombreEntry.Text           = string.Empty;
+                RazaEntry.Text             = string.Empty;
+                EspecieEntry.Text          = string.Empty;
                 FechaNacimientoPicker.Date = DateTime.Today;
-
                 FormularioMascota.IsVisible = false;
-                RegistrarBtn.IsVisible = true;
-                ActualizarBtn.IsVisible = false;
-
+                RegistrarBtn.IsVisible      = true;
+                ActualizarBtn.IsVisible     = false;
                 CargarMascotas();
             }
             else
@@ -167,30 +167,15 @@ namespace APPVitalPets.Views
             }
         }
 
-        private async void OnVerDetalles(object sender, EventArgs e)
-        {
-            var boton = sender as Button;
-            var mascota = boton?.CommandParameter as Mascota;
-            if (mascota == null) return;
-
-            await DisplayAlert("Detalles",
-                $"Nombre: {mascota.Nombre}\n" +
-                $"Raza: {mascota.Raza}\n" +
-                $"Especie: {mascota.Especie}\n" +
-                $"Edad: {mascota.Edad}\n" +
-                $"Fecha Nac: {mascota.FechaNacimiento:dd/MM/yyyy}",
-                "Cerrar");
-        }
-
         private async void OnEliminarMascota(object sender, EventArgs e)
         {
-            var boton = sender as Button;
-            var mascota = boton?.CommandParameter as Mascota;
+            var btn = sender as Button;
+            var mascota = btn?.CommandParameter as Mascota;
             if (mascota == null) return;
 
-            bool confirmacion = await DisplayAlert("Confirmar",
+            bool ok = await DisplayAlert("Confirmar",
                 $"¿Eliminar a {mascota.Nombre}?", "Sí", "No");
-            if (!confirmacion) return;
+            if (!ok) return;
 
             var api = new ApiService();
             if (await api.EliminarMascotaAsync(mascota.Id))
@@ -204,20 +189,27 @@ namespace APPVitalPets.Views
             }
         }
 
-        private async void OnMascotaSelected(object sender, SelectionChangedEventArgs e)
+        private async void OnVerDetalles(object sender, EventArgs e)
         {
-            var selectedMascota = e.CurrentSelection.FirstOrDefault() as Mascota;
-            if (selectedMascota == null)
-                return;
+            var btn = sender as Button;
+            var mascota = btn?.CommandParameter as Mascota;
+            if (mascota == null) return;
 
-            await DisplayAlert(
-                "Mascota seleccionada",
-                $"Nombre: {selectedMascota.Nombre}",
-                "OK"
-            );
-
-            ((CollectionView)sender).SelectedItem = null;
+            await DisplayAlert("Detalles",
+                $"Nombre: {mascota.Nombre}\n" +
+                $"Raza: {mascota.Raza}\n" +
+                $"Especie: {mascota.Especie}\n" +
+                $"Edad: {mascota.Edad}\n" +
+                $"Fecha Nac: {mascota.FechaNacimiento:dd/MM/yyyy}",
+                "Cerrar");
         }
 
+        private void OnMascotaSelected(object sender, SelectionChangedEventArgs e)
+        {
+            var sel = e.CurrentSelection.FirstOrDefault() as Mascota;
+            if (sel == null) return;
+            DisplayAlert("Mascota seleccionada", $"Nombre: {sel.Nombre}", "OK");
+            ((CollectionView)sender).SelectedItem = null;
+        }
     }
 }

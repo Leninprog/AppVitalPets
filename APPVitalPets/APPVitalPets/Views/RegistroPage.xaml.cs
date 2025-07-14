@@ -9,10 +9,7 @@ public partial class RegistroPage : ContentPage
     {
         InitializeComponent();
     }
-    private async void OnVolverMascotasClicked(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//MascotasPage");
-    }
+    
     private async void OnRegisterClicked(object sender, EventArgs e)
     {
         var nuevo = new Usuario
