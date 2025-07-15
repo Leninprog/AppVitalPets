@@ -2,88 +2,35 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="APPVitalPets.Views.LoginPage"
-             BackgroundColor="#F3F4F6"
-             Appearing="OnPageAppearing">
+             xmlns:viewModels="clr-namespace:APPVitalPets.ViewModels"
+             BackgroundColor="#F3F4F6">
+    <ContentPage.BindingContext>
+        <viewModels:LoginViewModel />
+    </ContentPage.BindingContext>
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
-            
-            <Label x:Name="TitleLabel"
-                   Text="¡Bienvenido a Vital Pets!"
-                   FontSize="28"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   TextColor="#374151"
-                   Opacity="0"
-                   TranslationY="20" />
+            <Label Text="¡Bienvenido a Vital Pets!" FontSize="28" FontAttributes="Bold"
+                   HorizontalOptions="Center" TextColor="#374151" />
 
-            <Frame x:Name="FormFrame"
-                   BackgroundColor="White"
-                   CornerRadius="12"
-                   Padding="20"
-                   HasShadow="True"
-                   BorderColor="#E5E7EB"
-                   Opacity="0">
-
+            <Frame BackgroundColor="White" CornerRadius="12" Padding="20" HasShadow="True">
                 <VerticalStackLayout Spacing="15">
+                    <Label Text="Iniciar Sesión" FontSize="24" FontAttributes="Bold"
+                           HorizontalOptions="Center" TextColor="#111827" />
 
-                    <Label Text="Iniciar Sesión"
-                           FontSize="24"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           TextColor="#111827" />
+                    <Entry Placeholder="Usuario"
+                           Text="{Binding RUsuario}" />
 
-                    <!-- Campo Usuario -->
-                    <Frame BackgroundColor="#F9FAFB"
-                           CornerRadius="10"
-                           HasShadow="False"
-                           Padding="10">
-                        <Entry x:Name="UserEntry"
-                               Placeholder="Correo electrónico o usuario"
-                               PlaceholderColor="#9CA3AF"
-                               TextColor="#111827"
-                               Keyboard="Email" />
-                    </Frame>
+                    <Entry Placeholder="Contraseña"
+                           Text="{Binding Contrasena}"
+                           IsPassword="True" />
 
-                    <!-- Campo Contraseña -->
-                    <Frame BackgroundColor="#F9FAFB"
-                           CornerRadius="10"
-                           HasShadow="False"
-                           Padding="10">
-                        <Entry x:Name="PassEntry"
-                               Placeholder="Contraseña"
-                               IsPassword="True"
-                               PlaceholderColor="#9CA3AF"
-                               TextColor="#111827" />
-                    </Frame>
+                    <Label x:Name="ErrorLabel" Text="{Binding MensajeError}"
+                           IsVisible="{Binding MostrarError}" TextColor="#DC2626"
+                           FontAttributes="Bold" FontSize="14" HorizontalOptions="Center" />
 
-                    <!-- Mensaje de error -->
-                    <Label x:Name="ErrorLabel"
-                           Text="⚠️ Usuario o contraseña incorrectos"
-                           TextColor="#DC2626"
-                           FontAttributes="Bold"
-                           IsVisible="False"
-                           FontSize="14"
-                           HorizontalOptions="Center"
-                           Opacity="0" />
-
-                    <!-- Botón de Login -->
-                    <Button Text="Iniciar Sesión"
-        Clicked="OnLoginClicked"
-        BackgroundColor="#3B82F6"
-        TextColor="White"
-        FontAttributes="Bold"
-        CornerRadius="10"
-        HeightRequest="50" />
-
-                    <Button Text="Registrarse"
-        Clicked="OnRegisterClicked"
-        BackgroundColor="#E5E7EB"
-        TextColor="#1F2937"
-        FontAttributes="Bold"
-        CornerRadius="10"
-        HeightRequest="50" />
-                
+                    <Button Text="Iniciar Sesión" Command="{Binding LoginCommand}" />
+                    <Button Text="Registrarse" Command="{Binding IrRegistroCommand}" />
                 </VerticalStackLayout>
             </Frame>
         </VerticalStackLayout>

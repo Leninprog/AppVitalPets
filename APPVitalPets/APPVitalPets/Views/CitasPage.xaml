@@ -1,210 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:sys="clr-namespace:System;assembly=netstandard"
-    x:Class="APPVitalPets.Views.CitasPage"
-    Title="Citas"
-    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:APPVitalPets.ViewModels"
+             x:Class="APPVitalPets.Views.CitasPage"
+             Title="Citas">
+
+    <ContentPage.BindingContext>
+        <viewModels:CitasViewModel />
+    </ContentPage.BindingContext>
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+        <VerticalStackLayout Padding="20">
+            <Button Text="+ Nueva Cita"
+                    Command="{Binding MostrarFormularioCommand}" />
 
-            <!-- Header mejorado -->
-            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
-                <Button
-                    Grid.Column="0"
-                    Text="← Mascotas"
-                    Clicked="OnVolverMascotasClicked"
-                    BackgroundColor="{StaticResource Primary}"
-                    TextColor="{StaticResource White}"
-                    HeightRequest="45"
-                    Padding="15,0"
-                    FontSize="14"
-                    FontAttributes="Bold" />
+            <StackLayout IsVisible="{Binding MostrarFormulario}" Padding="10">
+                <Entry Placeholder="Mascota" Text="{Binding NombreMascota}" />
+                <Entry Placeholder="Dueño" Text="{Binding NombreDueño}" />
+                <Entry Placeholder="Teléfono" Text="{Binding Telefono}" />
+                <DatePicker Date="{Binding Fecha}" />
+                <Entry Placeholder="Motivo" Text="{Binding Motivo}" />
+                <Entry Placeholder="Veterinario" Text="{Binding Veterinario}" />
+                <Button Text="Registrar" Command="{Binding RegistrarCitaCommand}" />
+            </StackLayout>
 
-                <Label
-                    Grid.Column="1"
-                    Text="🐾 Gestión de Citas"
-                    FontSize="22"
-                    FontAttributes="Bold"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    TextColor="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
-            </Grid>
-
-            <!-- Botón Nueva Cita estilizado -->
-            <Button
-                Text="+ Nueva Cita"
-                Clicked="OnMostrarFormularioClicked"
-                BackgroundColor="{StaticResource Primary}"
-                TextColor="{StaticResource White}"
-                FontAttributes="Bold"
-                FontSize="16"
-                HeightRequest="50"
-                CornerRadius="15"
-                Margin="0,5,0,0" />
-
-            <!-- Formulario de cita mejorado -->
-            <Frame
-                x:Name="FormularioCita"
-                IsVisible="False"
-                Padding="25"
-                CornerRadius="20"
-                BorderColor="{StaticResource Primary}"
-                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}">
-
-                <VerticalStackLayout Spacing="18">
-                    <Label
-                        Text="📋 Nueva Cita Veterinaria"
-                        FontSize="18"
-                        FontAttributes="Bold"
-                        TextColor="{StaticResource Primary}"
-                        HorizontalOptions="Center"
-                        Margin="0,0,0,10" />
-
-                    <!-- Campos del formulario con Frame envolvente -->
-                    <VerticalStackLayout Spacing="12">
-
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="🐕 Nombre de la mascota" FontAttributes="Bold" />
-                            <Frame CornerRadius="10" Padding="0" BorderColor="{StaticResource Primary}">
-                                <Entry x:Name="MascotaEntry"
-                                       Placeholder="Ej: Firulais"
-                                       BackgroundColor="Transparent"
-                                       HeightRequest="45" />
-                            </Frame>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="👤 Nombre del dueño" FontAttributes="Bold" />
-                            <Frame CornerRadius="10" Padding="0" BorderColor="{StaticResource Primary}">
-                                <Entry x:Name="DuenoEntry"
-                                       Placeholder="Ej: Juan Pérez"
-                                       BackgroundColor="Transparent"
-                                       HeightRequest="45" />
-                            </Frame>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="📞 Teléfono" FontAttributes="Bold" />
-                            <Frame CornerRadius="10" Padding="0" BorderColor="{StaticResource Primary}">
-                                <Entry x:Name="TelefonoEntry"
-                                       Keyboard="Telephone"
-                                       Placeholder="0987654321"
-                                       BackgroundColor="Transparent"
-                                       HeightRequest="45" />
-                            </Frame>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="📅 Fecha de la cita" FontAttributes="Bold" />
-                            <Frame CornerRadius="10" Padding="0" BorderColor="{StaticResource Primary}">
-                                <DatePicker x:Name="FechaCitaPicker"
-                                            MaximumDate="{x:Static sys:DateTime.Today}"
-                                            HeightRequest="45" />
-                            </Frame>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="🏥 Motivo" FontAttributes="Bold" />
-                            <Frame CornerRadius="10" Padding="0" BorderColor="{StaticResource Primary}">
-                                <Entry x:Name="MotivoEntry"
-                                       Placeholder="Describe el motivo de la cita"
-                                       BackgroundColor="Transparent"
-                                       HeightRequest="45" />
-                            </Frame>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="👨‍⚕ Veterinario asignado" FontAttributes="Bold" />
-                            <Frame CornerRadius="10" Padding="0" BorderColor="{StaticResource Primary}">
-                                <Entry x:Name="VetEntry"
-                                       Placeholder="Ej: Dr. García"
-                                       BackgroundColor="Transparent"
-                                       HeightRequest="45" />
-                            </Frame>
-                        </VerticalStackLayout>
-
-                    </VerticalStackLayout>
-
-                    <!-- Botones de acción -->
-                    <HorizontalStackLayout Spacing="15" HorizontalOptions="Center" Margin="0,15,0,0">
-                        <Button x:Name="RegistrarCitaBtn"
-                                Text="✅ Registrar"
-                                Clicked="OnRegistrarCitaClicked"
-                                BackgroundColor="{StaticResource Secondary}"
-                                TextColor="{StaticResource Black}"
-                                CornerRadius="12"
-                                WidthRequest="130"
-                                HeightRequest="45"
-                                FontAttributes="Bold" />
-                        <Button x:Name="ActualizarCitaBtn"
-                                Text="🔄 Actualizar"
-                                Clicked="OnActualizarCitaClicked"
-                                IsVisible="False"
-                                BackgroundColor="{StaticResource Warning}"
-                                TextColor="{StaticResource Black}"
-                                CornerRadius="12"
-                                WidthRequest="130"
-                                HeightRequest="45"
-                                FontAttributes="Bold" />
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-            </Frame>
-
-            <!-- Lista de citas estilizada -->
-            <Frame
-                CornerRadius="20"
-                BorderColor="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
-                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
-
-                <CollectionView x:Name="CitasList" SelectionMode="None" Margin="10">
-                    <CollectionView.Header>
-                        <Grid Padding="10" ColumnSpacing="10" HeightRequest="40">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <Label Text="Mascota" Grid.Column="0" FontAttributes="Bold" />
-                            <Label Text="Dueño"  Grid.Column="1" FontAttributes="Bold" />
-                            <Label Text="Fecha"  Grid.Column="2" FontAttributes="Bold" />
-                            <Label Text="Motivo" Grid.Column="3" FontAttributes="Bold" />
-                            <Label Text="Acción" Grid.Column="4" FontAttributes="Bold" />
+            <CollectionView ItemsSource="{Binding Citas}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*,*,*,2*,Auto">
+                            <Label Text="{Binding NombreMascota}" Grid.Column="0" />
+                            <Label Text="{Binding NombreDueño}" Grid.Column="1" />
+                            <Label Text="{Binding Fecha, StringFormat='dd/MM/yyyy'}" Grid.Column="2" />
+                            <Label Text="{Binding Motivo}" Grid.Column="3" />
+                            <HorizontalStackLayout Grid.Column="4" Spacing="5">
+                                <Button Text="✏"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditarCitaCommand}"
+                                        CommandParameter="{Binding .}" />
+                                <Button Text="🗑"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarCitaCommand}"
+                                        CommandParameter="{Binding Id}" />
+                            </HorizontalStackLayout>
                         </Grid>
-                    </CollectionView.Header>
-
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame CornerRadius="12" Padding="10" Margin="0,5"
-                                   BorderColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
-                                   BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray800}}">
-                                <Grid ColumnSpacing="10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="1*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding NombreMascota}" Grid.Column="0" />
-                                    <Label Text="{Binding NombreDueño}" Grid.Column="1" />
-                                    <Label Text="{Binding Fecha, StringFormat='dd/MM/yyyy'}" Grid.Column="2" />
-                                    <Label Text="{Binding Motivo}" Grid.Column="3" LineBreakMode="TailTruncation" MaxLines="2" />
-                                    <HorizontalStackLayout Grid.Column="4" Spacing="8">
-                                        <Button Text="✏" Clicked="OnEditarCitaClicked" CommandParameter="{Binding .}" WidthRequest="36" HeightRequest="36" />
-                                        <Button Text="🗑" Clicked="OnEliminarCitaClicked" CommandParameter="{Binding Id}" WidthRequest="36" HeightRequest="36" />
-                                    </HorizontalStackLayout>
-                                </Grid>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Frame>
-
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

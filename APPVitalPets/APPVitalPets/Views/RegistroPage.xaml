@@ -1,99 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:APPVitalPets.ViewModels"
              x:Class="APPVitalPets.Views.RegistroPage"
              Title="Registro"
              BackgroundColor="#F3F4F6">
 
+    <ContentPage.BindingContext>
+        <viewModels:RegistroViewModel />
+    </ContentPage.BindingContext>
+
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
-            
-            <Label Text="Crear Cuenta"
-                   FontSize="28"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   TextColor="#374151" />
+            <Label Text="Crear Cuenta" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#374151" />
 
-            <Frame BackgroundColor="White"
-                   CornerRadius="12"
-                   Padding="20"
-                   HasShadow="True"
-                   BorderColor="#E5E7EB">
+            <Entry Placeholder="Usuario" Text="{Binding RUsuario}" />
+            <Entry Placeholder="Contraseña" IsPassword="True" Text="{Binding Contrasena}" />
+            <Entry Placeholder="Correo" Text="{Binding Correo}" />
+            <Entry Placeholder="Teléfono" Text="{Binding Telefono}" />
+            <Entry Placeholder="Dirección" Text="{Binding Direccion}" />
 
-                <VerticalStackLayout Spacing="15">
+            <Label Text="{Binding MensajeError}" IsVisible="{Binding MostrarError}"
+                   TextColor="#DC2626" FontAttributes="Bold" FontSize="14"
+                   HorizontalOptions="Center" />
 
-                    <Frame BackgroundColor="#F9FAFB"
-                           CornerRadius="10"
-                           HasShadow="False"
-                           Padding="10">
-                        <Entry x:Name="UserEntry"
-                               Placeholder="Usuario"
-                               PlaceholderColor="#9CA3AF"
-                               TextColor="#111827" />
-                    </Frame>
-
-                    <Frame BackgroundColor="#F9FAFB"
-                           CornerRadius="10"
-                           HasShadow="False"
-                           Padding="10">
-                        <Entry x:Name="PassEntry"
-                               Placeholder="Contraseña"
-                               IsPassword="True"
-                               PlaceholderColor="#9CA3AF"
-                               TextColor="#111827" />
-                    </Frame>
-
-                    <Frame BackgroundColor="#F9FAFB"
-                           CornerRadius="10"
-                           HasShadow="False"
-                           Padding="10">
-                        <Entry x:Name="CorreoEntry"
-                               Placeholder="Correo"
-                               Keyboard="Email"
-                               PlaceholderColor="#9CA3AF"
-                               TextColor="#111827" />
-                    </Frame>
-
-                    <Frame BackgroundColor="#F9FAFB"
-                           CornerRadius="10"
-                           HasShadow="False"
-                           Padding="10">
-                        <Entry x:Name="TelEntry"
-                               Placeholder="Teléfono"
-                               Keyboard="Telephone"
-                               PlaceholderColor="#9CA3AF"
-                               TextColor="#111827" />
-                    </Frame>
-
-                    <Frame BackgroundColor="#F9FAFB"
-                           CornerRadius="10"
-                           HasShadow="False"
-                           Padding="10">
-                        <Entry x:Name="DirEntry"
-                               Placeholder="Dirección"
-                               PlaceholderColor="#9CA3AF"
-                               TextColor="#111827" />
-                    </Frame>
-
-                    <Label x:Name="ErrorLabel"
-                           Text="⚠️ No se pudo registrar al usuario"
-                           TextColor="#DC2626"
-                           FontAttributes="Bold"
-                           IsVisible="False"
-                           FontSize="14"
-                           HorizontalOptions="Center"
-                           Opacity="0" />
-
-                    <Button Text="Registrar"
-                            Clicked="OnRegisterClicked"
-                            BackgroundColor="#10B981"
-                            TextColor="White"
-                            FontAttributes="Bold"
-                            CornerRadius="10"
-                            HeightRequest="50" />
-
-                </VerticalStackLayout>
-            </Frame>
+            <Button Text="Registrar" Command="{Binding RegistrarCommand}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
