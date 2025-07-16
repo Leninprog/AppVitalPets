@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using APPVitalPets.Services;
+using Microsoft.Extensions.Logging;
 
 namespace APPVitalPets
 {
@@ -15,8 +16,10 @@ namespace APPVitalPets
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "mascotas.db3");
+            builder.Services.AddSingleton<MascotaDatabase>();
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

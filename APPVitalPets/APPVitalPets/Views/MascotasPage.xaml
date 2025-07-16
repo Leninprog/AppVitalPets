@@ -144,6 +144,12 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Frame>
+
+            <Button 
+                Text="Cerrar Sesión" 
+                BackgroundColor="Red" 
+                TextColor="White"
+                Clicked="OnCerrarSesionClicked" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

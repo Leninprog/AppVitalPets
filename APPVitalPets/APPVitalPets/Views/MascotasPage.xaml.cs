@@ -12,10 +12,12 @@ namespace APPVitalPets.Views
     {
         private Usuario usuarioActual;
         private Mascota mascotaEnEdicion;
+        private readonly MascotaDatabase _db;
 
         public MascotasPage()
         {
             InitializeComponent();
+            _db = MascotaDatabase.Instance;
 
             // 1) Recuperar el usuario guardado en Preferences
             var js = Preferences.Get("usuarioJson", string.Empty);
@@ -56,6 +58,9 @@ namespace APPVitalPets.Views
             var todas = await api.ObtenerMascotasAsync();
             var mias = todas.Where(m => m.UsuarioId == usuarioActual.Id).ToList();
             MascotasList.ItemsSource = mias;
+
+            foreach (var mascota in mias)
+                await _db.GuardarMascotaAsync(mascota);
         }
 
         private async void OnAgregarClicked(object sender, EventArgs e)
@@ -222,6 +227,17 @@ namespace APPVitalPets.Views
 
             var dataService = new UsuarioDataService();
             await dataService.GuardarUsuarioConMascotasAsync(usuarioActual, mias);
+        }
+
+        private async void OnCerrarSesionClicked(object sender, EventArgs e)
+        {
+            bool confirm = await DisplayAlert("Cerrar Sesión", "¿Estás seguro de que deseas cerrar sesión?", "Sí", "Cancelar");
+            if (confirm)
+            {
+                Preferences.Remove("usuarioJson");
+
+                await Shell.Current.GoToAsync("//Login");
+            }
         }
 
     }
