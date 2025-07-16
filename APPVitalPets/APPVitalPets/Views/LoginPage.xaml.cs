@@ -51,6 +51,13 @@ public partial class LoginPage : ContentPage
             var js = JsonSerializer.Serialize(usuario);
             Preferences.Set("usuarioJson", js);
 
+            // Guardar archivo local
+            var apiService = new ApiService();
+            var mascotasDelUsuario = await apiService.ObtenerMascotasAsync();
+            var propias = mascotasDelUsuario.Where(m => m.UsuarioId == usuario.Id).ToList();
+            var dataService = new UsuarioDataService();
+            await dataService.GuardarUsuarioConMascotasAsync(usuario, propias);
+
             ErrorLabel.IsVisible = false;
             // Navega al tab de Mascotas
             await Shell.Current.GoToAsync("//MascotasPage");

@@ -87,6 +87,7 @@ namespace APPVitalPets.Views
             {
                 await DisplayAlert("Éxito", "Mascota creada correctamente", "OK");
                 CargarMascotas();
+                await GuardarUsuarioConMascotasAsync();
 
                 NombreEntry.Text           = string.Empty;
                 RazaEntry.Text             = string.Empty;
@@ -160,6 +161,7 @@ namespace APPVitalPets.Views
                 RegistrarBtn.IsVisible      = true;
                 ActualizarBtn.IsVisible     = false;
                 CargarMascotas();
+                await GuardarUsuarioConMascotasAsync();
             }
             else
             {
@@ -211,5 +213,16 @@ namespace APPVitalPets.Views
             DisplayAlert("Mascota seleccionada", $"Nombre: {sel.Nombre}", "OK");
             ((CollectionView)sender).SelectedItem = null;
         }
+
+        private async Task GuardarUsuarioConMascotasAsync()
+        {
+            var api = new ApiService();
+            var todas = await api.ObtenerMascotasAsync();
+            var mias = todas.Where(m => m.UsuarioId == usuarioActual.Id).ToList();
+
+            var dataService = new UsuarioDataService();
+            await dataService.GuardarUsuarioConMascotasAsync(usuarioActual, mias);
+        }
+
     }
 }
